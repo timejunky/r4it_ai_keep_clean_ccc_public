@@ -1,15 +1,15 @@
-# Cursor Control Center (CCC) — Free Agents Plugin
+﻿# Cursor Control Center (CCC) — Free Agents Plugin
 
 **Cursor Agents plugin** (Customize / Marketplace) — **not** a VS Code `.vsix` extension.
 
-This public repository is the **Free / simple** distribution:
+> **Free vs Pro:** This public repo is the **Free** edition only.  
+> **CCC Pro** (Project HUD branding: patterns, custom logos, prefs export, autostart, …) is sold only on **[ready-4-it.com/ccc](https://www.ready-4-it.com/ccc)** with an `R4IT.…` license key.  
+> There is **no** paid checkout on the Cursor Marketplace (Publisher Terms §3.1).
 
-| Edition | Where | What |
+| Edition | Where | What you get |
 |---|---|---|
 | **Free (this repo)** | Cursor Marketplace / GitHub | Accent identity for Agents (skill + MCP + rules); optional IDE border cue |
-| **Licensed / Pro** | [ready-4-it.com](https://www.ready-4-it.com) only | Project HUD, branding gates, license unlock (`R4IT.…` token) |
-
-Marketplace listings are **free of charge** (Cursor Publisher Terms §3.1). Paid features are never sold through the Marketplace.
+| **CCC Pro** | [ready-4-it.com/ccc](https://www.ready-4-it.com/ccc) | Licensed Project HUD + Pro feature gates |
 
 ## Install (local)
 
@@ -30,13 +30,14 @@ Reload Cursor → **Customize** → search **cursor-control-center** / **CCC**.
   - `ccc_apply_ide_border_cue`
 - Rule: speak identity; never claim Agents Glass chrome tint
 
-## What Free does not include
+## What Free does **not** include (CCC Pro)
 
-- WinForms / Pro Project HUD host
-- License activation / Pro feature gates
-- Private product planning docs
+- WinForms / Project HUD host over Agents
+- Pattern markers, custom logos, logo→URL
+- Prefs export/import, autostart
+- License activation UI
 
-Get Pro at **https://www.ready-4-it.com** (paste license key in the licensed HUD).
+**Upgrade:** https://www.ready-4-it.com/ccc — paste the license key in the Pro HUD (Einstellungen → Lizenz).
 
 ## Logos
 
@@ -48,4 +49,4 @@ Get Pro at **https://www.ready-4-it.com** (paste license key in the licensed HUD
 
 ## License
 
-MIT for this Free Agents plugin. Pro product terms apply on ready-4-it.com.
+MIT for this Free Agents plugin. Pro product terms apply on ready-4-it.com/ccc.

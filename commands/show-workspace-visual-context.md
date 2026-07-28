@@ -1,23 +1,11 @@
----
+﻿---
 name: show-workspace-visual-context
-description: Resolve and speak CCC visual identity (accent name + hex + IDE border cue) for the current or named workspace
+description: Resolve and speak CCC visual identity (accent name + hex + IDE border cue). Free Agents plugin; Pro HUD is separate.
 ---
 
-# Show workspace visual context
+# Show workspace visual context (Free)
 
-1. Resolve workspace path (current Agent folder, or Unframed / HoReCanish / … from `.ccc/workspaces.json`).
-2. Run:
-
-```bash
-Prefer MCP tool ccc_resolve_visual_context with the workspace path.
-```
-
-3. Paste the identity card at the top of your reply (accent **name** + hex). Example:
-
-```text
-Workspace identity: HoReCanish
-Accent: Cyan (#3db8c5) · source: manual-override
-IDE border cue: #3db8c5 (suggested for AKC IDE)
-```
-
-4. Remind: Agents chrome cannot tint yet; IDE borders/title are AKC-owned.
+1. Prefer MCP tool `ccc_resolve_visual_context` with the workspace path.
+2. Paste the identity card at the top of your reply (accent **name** + hex).
+3. Remind: Agents chrome cannot tint yet; IDE borders/title are AKC-owned.
+4. If the user wants the floating Project HUD / logos / patterns: that is **CCC Pro** → https://www.ready-4-it.com/ccc (not Marketplace checkout).

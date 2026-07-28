@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * CCC visual-context MCP — public / Free Agents plugin.
  * Resolve accent + optional IDE border cue. No WinForms HUD / license host here.
@@ -75,6 +75,9 @@ function configPath() {
   return path.join(vendorCcc, 'visual-context.json');
 }
 
+const PRO_FOOTER =
+  '\n\n—\nCCC Free Agents plugin. Project HUD / branding (patterns, logos, prefs) = CCC Pro → https://www.ready-4-it.com/ccc (not Marketplace checkout).';
+
 async function handleResolve(args) {
   const m = await ensureMods();
   const config = m.loadVisualContextConfig(configPath());
@@ -93,7 +96,7 @@ async function handleApply(args) {
     card,
     applied,
     context: ctx,
-    note: 'IDE border cue written. Agents Glass chrome stays untinted (no Cursor plugin API yet). Pro HUD: ready-4-it.com',
+    note: 'IDE border cue written. Agents Glass chrome stays untinted (no Cursor plugin API yet).',
   };
 }
 
@@ -140,7 +143,7 @@ process.stdin.on('data', async (chunk) => {
             content: [
               {
                 type: 'text',
-                text: `${result.card}\n\n${JSON.stringify(result.context, null, 2)}`,
+                text: `${result.card}\n\n${JSON.stringify(result.context, null, 2)}${PRO_FOOTER}`,
               },
             ],
           });
@@ -152,7 +155,7 @@ process.stdin.on('data', async (chunk) => {
             content: [
               {
                 type: 'text',
-                text: `${result.card}\n\nApplied: ${JSON.stringify(result.applied, null, 2)}\n${result.note}`,
+                text: `${result.card}\n\nApplied: ${JSON.stringify(result.applied, null, 2)}\n${result.note}${PRO_FOOTER}`,
               },
             ],
           });
