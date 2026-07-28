@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ccc-visual-context": {
+      "command": "node",
+      "args": ["./mcp/server.mjs"]
+    }
+  }
+}

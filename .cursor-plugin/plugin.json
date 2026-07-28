@@ -1,0 +1,21 @@
+{
+  "name": "cursor-control-center",
+  "version": "0.2.0",
+  "description": "CCC Free — Agents workspace identity (accent naming + optional IDE border cue). Pro HUD / license: ready-4-it.com",
+  "author": {
+    "name": "ready-4-it",
+    "email": "support@ready-4-it.com"
+  },
+  "logo": "assets/logo.png",
+  "keywords": [
+    "ccc",
+    "cursor-control-center",
+    "workspace",
+    "visual-context",
+    "agents",
+    "multi-project"
+  ],
+  "homepage": "https://www.ready-4-it.com",
+  "repository": "https://github.com/timejunky/r4it_ai_keep_clean_ccc_public",
+  "license": "MIT"
+}
