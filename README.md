@@ -1,15 +1,25 @@
-﻿# Cursor Control Center (CCC) — Free Agents Plugin
+﻿# Cursor Control Center (CCC) — Free / Light Agents Plugin
 
 **Cursor Agents plugin** (Customize / Marketplace) — **not** a VS Code `.vsix` extension.
 
-> **Free vs Pro:** This public repo is the **Free** edition only.  
-> **CCC Pro** (Project HUD branding: patterns, custom logos, prefs export, autostart, …) is sold only on **[ready-4-it.com/ccc](https://www.ready-4-it.com/ccc)** with an `R4IT.…` license key.  
-> There is **no** paid checkout on the Cursor Marketplace (Publisher Terms §3.1).
+> **This light edition has no license input.**  
+> There is only a pointer to **CCC Pro**: [https://www.ready-4-it.com/ccc](https://www.ready-4-it.com/ccc)  
+> License keys and activation exist **only** in the paid Pro product — never in this repo / Marketplace listing.
 
-| Edition | Where | What you get |
+| Edition | Where | What |
 |---|---|---|
-| **Free (this repo)** | Cursor Marketplace / GitHub | Accent identity for Agents (skill + MCP + rules); optional IDE border cue |
-| **CCC Pro** | [ready-4-it.com/ccc](https://www.ready-4-it.com/ccc) | Licensed Project HUD + Pro feature gates |
+| **Free / Light (this repo)** | Cursor Marketplace / GitHub | Accent identity (skill + MCP + rules); optional IDE border cue; **Pro link only** |
+| **CCC Pro** | [ready-4-it.com/ccc](https://www.ready-4-it.com/ccc) | Project HUD, branding gates, license activation |
+
+Marketplace listings stay free of charge (Publisher Terms §3.1). No paid checkout here.
+
+## CCC Pro
+
+Want the Agents Project HUD (patterns, custom logos, prefs packs, …)?
+
+→ **[https://www.ready-4-it.com/ccc](https://www.ready-4-it.com/ccc)**
+
+Do **not** look for a license field in this Free plugin — it is intentionally omitted.
 
 ## Install (local)
 
@@ -29,15 +39,13 @@ Reload Cursor → **Customize** → search **cursor-control-center** / **CCC**.
   - `ccc_resolve_visual_context`
   - `ccc_apply_ide_border_cue`
 - Rule: speak identity; never claim Agents Glass chrome tint
+- Honest upgrade hint → ready-4-it.com/ccc
 
-## What Free does **not** include (CCC Pro)
+## What Free does **not** include
 
-- WinForms / Project HUD host over Agents
-- Pattern markers, custom logos, logo→URL
-- Prefs export/import, autostart
-- License activation UI
-
-**Upgrade:** https://www.ready-4-it.com/ccc — paste the license key in the Pro HUD (Einstellungen → Lizenz).
+- License / token paste UI
+- WinForms Project HUD
+- Pattern markers, custom logos, prefs export/import, autostart
 
 ## Logos
 
@@ -47,6 +55,6 @@ Reload Cursor → **Customize** → search **cursor-control-center** / **CCC**.
 | `assets/logo-about-32.png` | Small / About |
 | `assets/logo-social-1200.png` | Social / store preview |
 
-## License
+## License (open-source terms for this Free plugin)
 
-MIT for this Free Agents plugin. Pro product terms apply on ready-4-it.com/ccc.
+MIT for this Free Agents plugin. CCC Pro terms apply at ready-4-it.com/ccc.

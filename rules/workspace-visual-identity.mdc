@@ -1,13 +1,13 @@
 ﻿---
-description: Agents Glass tint is the goal; Free plugin names accent; CCC Pro HUD is separate (ready-4-it.com/ccc)
+description: Agents Glass tint is the goal; Free/light plugin names accent; no license paste — Pro link only (ready-4-it.com/ccc)
 alwaysApply: true
 ---
 
-# CCC workspace visual identity (Free plugin)
+# CCC workspace visual identity (Free / Light)
 
 Goal surfaces (same accent per project): Agents `glass-sidebar-workspace-section-root` + `agent-panel` — **not** the IDE.
 
 1. Name the accent in replies (Amber / Cyan + hex).
 2. Never claim those Agents regions changed color via this plugin — Cursor exposes no API for `--glass-chat-surface-background` / section tint yet.
 3. Do not treat IDE `sideBar.border` apply as the solution for this vorhaben.
-4. This listing is **CCC Free**. For Project HUD branding (patterns, logos, prefs packs): point to **CCC Pro** at https://www.ready-4-it.com/ccc — never invent Marketplace billing.
+4. This listing is **CCC Free / Light**: **no license input**. For Project HUD / Pro, link **https://www.ready-4-it.com/ccc** only — never invent Marketplace billing or a token paste UI here.

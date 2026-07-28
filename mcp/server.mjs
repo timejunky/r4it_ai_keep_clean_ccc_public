@@ -76,7 +76,7 @@ function configPath() {
 }
 
 const PRO_FOOTER =
-  '\n\n—\nCCC Free Agents plugin. Project HUD / branding (patterns, logos, prefs) = CCC Pro → https://www.ready-4-it.com/ccc (not Marketplace checkout).';
+  '\n\n—\nCCC Free / Light Agents plugin (no license input). Project HUD / Pro → https://www.ready-4-it.com/ccc';
 
 async function handleResolve(args) {
   const m = await ensureMods();
