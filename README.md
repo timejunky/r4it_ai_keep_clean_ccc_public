@@ -1,15 +1,21 @@
-﻿# Cursor Control Center (CCC) — Free / Light Agents Plugin
+﻿# AI Keep Clean Control Center (CCC) — Free / Light Agents Plugin
 
-**Cursor Agents plugin** (Customize / Marketplace) — **not** a VS Code `.vsix` extension.
+<p align="center">
+  <img src="assets/logo.png" alt="AI Keep Clean Control Center" width="128" height="128" />
+</p>
+
+**ready-4-it / AI Keep Clean** Agents plugin (Customize / Marketplace) — **not** a VS Code `.vsix`, and **not** a Cursor-branded product name.
+
+**CCC** = short name for *AI Keep Clean Control Center* (AKC sibling). Not a Cursor-trademark product name.
 
 > **This light edition has no license input.**  
 > There is only a pointer to **CCC Pro**: [https://www.ready-4-it.com/ccc](https://www.ready-4-it.com/ccc)  
-> License keys and activation exist **only** in the paid Pro product — never in this repo / Marketplace listing.
+> Activation keys exist **only** in the paid Pro product — never in this repo / Marketplace listing.
 
 | Edition | Where | What |
 |---|---|---|
 | **Free / Light (this repo)** | Cursor Marketplace / GitHub | Accent identity (skill + MCP + rules); optional IDE border cue; **Pro link only** |
-| **CCC Pro** | [ready-4-it.com/ccc](https://www.ready-4-it.com/ccc) | Project HUD, branding gates, license activation |
+| **CCC Pro** | [ready-4-it.com/ccc](https://www.ready-4-it.com/ccc) | Project HUD, branding gates, activation |
 
 Marketplace listings stay free of charge (Publisher Terms §3.1). No paid checkout here.
 
@@ -26,10 +32,10 @@ Do **not** look for a license field in this Free plugin — it is intentionally 
 Copy this repo into:
 
 ```text
-%USERPROFILE%\.cursor\plugins\local\cursor-control-center\
+%USERPROFILE%\.cursor\plugins\local\ai-keep-clean-ccc\
 ```
 
-Reload Cursor → **Customize** → search **cursor-control-center** / **CCC**.
+Reload Cursor → **Customize** → search **ai-keep-clean-ccc** / **CCC**.
 
 ## What Free includes
 
@@ -38,23 +44,15 @@ Reload Cursor → **Customize** → search **cursor-control-center** / **CCC**.
 - MCP: `ccc-visual-context`
   - `ccc_resolve_visual_context`
   - `ccc_apply_ide_border_cue`
-- Rule: speak identity; never claim Agents Glass chrome tint
-- Honest upgrade hint → ready-4-it.com/ccc
+- Rule: workspace visual identity reminder
 
 ## What Free does **not** include
 
-- License / token paste UI
 - WinForms Project HUD
-- Pattern markers, custom logos, prefs export/import, autostart
+- Aktivierungsschlüssel / device slots
+- Pro feature gates (patterns, custom logos, prefs export, autostart, …)
 
-## Logos
+## Support
 
-| File | Use |
-|---|---|
-| `assets/logo.png` / `logo-marketplace-128.png` | Marketplace / plugin tile (128×128) |
-| `assets/logo-about-32.png` | Small / About |
-| `assets/logo-social-1200.png` | Social / store preview |
-
-## License (open-source terms for this Free plugin)
-
-MIT for this Free Agents plugin. CCC Pro terms apply at ready-4-it.com/ccc.
+- Store / Pro: https://www.ready-4-it.com/ccc  
+- Email: support@ready-4-it.com  
