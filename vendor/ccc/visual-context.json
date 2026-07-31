@@ -1,8 +1,14 @@
 ﻿{
-  "source": "akc-accent-first",
-  "applySurfaces": ["discussionPanel"],
-  "tintStrength": 0.35,
-  "defaultPaletteId": "neutral-ink",
-  "workspacePalettes": {},
-  "manualOverrides": {}
+    "manualOverrides":  {
+
+                        },
+    "source":  "akc-accent-first",
+    "defaultPaletteId":  "neutral-ink",
+    "workspacePalettes":  {
+
+                          },
+    "tintStrength":  0.35,
+    "applySurfaces":  [
+                          "discussionPanel"
+                      ]
 }
