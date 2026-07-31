@@ -6,7 +6,7 @@
 
 **ready-4-it / AI Keep Clean** Agents plugin (Customize / Marketplace) — **not** a VS Code `.vsix`, and **not** a Cursor-branded product name.
 
-**CCC** = short name for *AI Keep Clean Control Center* (AKC sibling). Not a Cursor-trademark product name.
+**CCC** = short name for *AI Keep Clean Control Center* (AKC sibling). Cursor Agents plugin for **project identity** across multi-repo chats — not a Cursor-trademark product name.
 
 > **This light edition has no license input.**  
 > There is only a pointer to **CCC Pro**: [https://www.ready-4-it.com/ccc](https://www.ready-4-it.com/ccc)  
@@ -18,6 +18,10 @@
 | **CCC Pro** | [ready-4-it.com/ccc](https://www.ready-4-it.com/ccc) | Project HUD, branding gates, activation |
 
 Marketplace listings stay free of charge (Publisher Terms §3.1). No paid checkout here.
+
+## Why CCC?
+
+Working in several Cursor Agents projects at once? Free CCC names the active workspace accent (words + hex) and can apply an IDE border cue. **Pro** adds the always-on **Project HUD** so you always know which repo the current chat belongs to.
 
 ## CCC Pro
 
