@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 // Copyright (c) 2026 ready-4-it
 /**
  * CCC visual-context MCP — public / Free Agents plugin.
