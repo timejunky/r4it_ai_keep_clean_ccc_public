@@ -1,3 +1,4 @@
+// Copyright (c) 2026 ready-4-it
 import fs from 'node:fs';
 import path from 'node:path';
 import { BORDER_TOKEN_ORDER } from './resolveVisualContext.mjs';

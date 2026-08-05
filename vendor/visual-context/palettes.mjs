@@ -1,3 +1,4 @@
+// Copyright (c) 2026 ready-4-it
 /**
  * Built-in CCC fallback palettes for discussion-panel tint.
  * Colour Zen: soft wash, not opaque neon.

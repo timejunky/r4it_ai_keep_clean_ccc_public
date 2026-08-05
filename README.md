@@ -1,12 +1,12 @@
-# AI Keep Clean Control Center (CCC) — Free / Light Agents Plugin
+# AI Keep Clean Context Control Center (CCC) — Free / Light Agents Plugin
 
 <p align="center">
-  <img src="assets/logo.png" alt="AI Keep Clean Control Center" width="128" height="128" />
+  <img src="assets/logo.png" alt="AI Keep Clean Context Control Center" width="128" height="128" />
 </p>
 
 **ready-4-it / AI Keep Clean** Agents plugin (Customize / Marketplace) — **not** a VS Code `.vsix`, and **not** a Cursor-branded product name.
 
-**CCC** = short name for *AI Keep Clean Control Center* (AKC sibling). Cursor Agents plugin for **project identity** across multi-repo chats — not a Cursor-trademark product name.
+**CCC** = short name for *AI Keep Clean Context Control Center* (AKC sibling). Cursor Agents plugin for **project identity** across multi-repo chats — not a Cursor-trademark product name.
 
 > **This light edition has no license input.**  
 > There is only a pointer to **CCC Pro**: [https://www.ready-4-it.com/akc_ccc](https://www.ready-4-it.com/akc_ccc)  
