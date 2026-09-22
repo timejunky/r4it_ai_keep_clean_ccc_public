@@ -1,0 +1,69 @@
+{
+    "name":  "ready-4-it-ccc-agents",
+    "owner":  {
+                  "name":  "ready-4-it",
+                  "email":  "support@ready-4-it.com",
+                  "url":  "https://www.ready-4-it.com"
+              },
+    "metadata":  {
+                     "description":  "ready-4-it agent plugins for Visual Studio Code Agents / GitHub Copilot Chat. Free: AKC CCC workspace identity + MCP visual-context. Trial/Pro Project HUD and branding are a licensed extension (Zebra akc_ccc) sold on ready-4-it.com/akc_ccc — not listed as a paid Agents catalog item. Cursor Agents use a separate .cursor-plugin channel in the same public repo.",
+                     "version":  "1.1.0",
+                     "pluginRoot":  "./plugins",
+                     "editions":  {
+                                      "free":  {
+                                                   "plugin":  "akc-ccc",
+                                                   "channel":  "public-git-marketplace"
+                                               },
+                                      "trial_pro":  {
+                                                        "plugin":  "akc-ccc-pro",
+                                                        "channel":  "zebra-akc_ccc",
+                                                        "store":  "https://www.ready-4-it.com/akc_ccc",
+                                                        "listedInThisMarketplace":  false,
+                                                        "note":  "Same product_id ccc device license unlocks Cursor + VS Code. Pro package is the existing Zebra akc_ccc → Cursor licensed install (token + device activation) — not published in this Free marketplace.json plugins array."
+                                                    }
+                                  }
+                 },
+    "plugins":  [
+                    {
+                        "name":  "akc-ccc",
+                        "displayName":  "AKC CCC — AI Keep Clean Context Control Center (Free)",
+                        "source":  "./plugins/akc-ccc",
+                        "description":  "Free VS Code Agents / Copilot Chat plugin for multi-project workspace identity: HUD pill, optional IDE border cue, MCP tools (ccc_resolve_visual_context, ccc_apply_ide_border_cue). Upgrade path: Trial/Pro Project HUD + branding via ready-4-it.com/akc_ccc (Zebra module akc_ccc + activation) — not Marketplace checkout. Companion IDE Control Center VSIX: ready-4-it.akc-ccc-vs. Cursor Free uses .cursor-plugin in this repo (separate from this VS package).",
+                        "version":  "0.2.40",
+                        "author":  {
+                                       "name":  "ready-4-it",
+                                       "email":  "support@ready-4-it.com",
+                                       "url":  "https://www.ready-4-it.com"
+                                   },
+                        "homepage":  "https://www.ready-4-it.com/akc_ccc",
+                        "repository":  "https://github.com/timejunky/r4it_ai_keep_clean_ccc_public",
+                        "license":  "SEE LICENSE IN LICENSE",
+                        "category":  "developer-tools",
+                        "keywords":  [
+                                         "akc-ccc",
+                                         "ai-keep-clean",
+                                         "context-control-center",
+                                         "vscode-agents",
+                                         "github-copilot",
+                                         "copilot-chat",
+                                         "agent-plugin",
+                                         "project-identity",
+                                         "workspace-accent",
+                                         "multi-project",
+                                         "mcp",
+                                         "visual-context",
+                                         "ccc-pro-upgrade",
+                                         "ready-4-it"
+                                     ],
+                        "tags":  [
+                                     "vscode",
+                                     "agents",
+                                     "copilot",
+                                     "identity",
+                                     "mcp",
+                                     "free",
+                                     "upgrade-to-pro"
+                                 ]
+                    }
+                ]
+}

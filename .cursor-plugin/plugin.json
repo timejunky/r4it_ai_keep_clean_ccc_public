@@ -1,0 +1,26 @@
+﻿{
+    "description":  "AI Keep Clean Context Control Center (CCC) — Free Cursor Agents identity for multi-project work (accent, MCP, IDE border cue). Pro HUD: https://www.ready-4-it.com/akc_ccc",
+    "repository":  "https://github.com/timejunky/r4it_ai_keep_clean_ccc_public",
+    "version":  "0.2.40",
+    "author":  {
+                   "email":  "support@ready-4-it.com",
+                   "name":  "ready-4-it"
+               },
+    "name":  "ai-keep-clean-ccc",
+    "keywords":  [
+                     "ccc",
+                     "ai-keep-clean",
+                     "akc",
+                     "control-center",
+                     "cursor",
+                     "agents",
+                     "hud",
+                     "project-identity",
+                     "multi-project",
+                     "workspace",
+                     "visual-context"
+                 ],
+    "homepage":  "https://www.ready-4-it.com/akc_ccc",
+    "license":  "SEE LICENSE IN LICENSE",
+    "logo":  "assets/logo.png"
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "r4it_mcp_ccc_visual_context": {
+      "command": "node",
+      "args": ["./mcp/server.mjs"]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+    "$schema":  "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+    "name":  "akc-ccc",
+    "version":  "0.2.40",
+    "description":  "AI Keep Clean Context Control Center (CCC) Free for Visual Studio Code Agents / GitHub Copilot Chat — workspace identity via HUD pill, optional IDE border cue, MCP visual-context tools. Trial/Pro extends this plugin with Project HUD, branding, and device activation via ready-4-it.com/akc_ccc (Zebra akc_ccc) — not paid Agents Marketplace checkout.",
+    "author":  {
+                   "name":  "ready-4-it",
+                   "email":  "support@ready-4-it.com",
+                   "url":  "https://www.ready-4-it.com"
+               },
+    "homepage":  "https://www.ready-4-it.com/akc_ccc",
+    "repository":  "https://github.com/timejunky/r4it_ai_keep_clean_ccc_public",
+    "license":  "SEE LICENSE IN LICENSE",
+    "keywords":  [
+                     "akc-ccc",
+                     "ai-keep-clean-ccc",
+                     "context-control-center",
+                     "vscode-agents-plugin",
+                     "github-copilot-chat",
+                     "project-identity",
+                     "workspace-accent",
+                     "multi-workspace",
+                     "mcp-server",
+                     "visual-context",
+                     "ccc-trial",
+                     "ccc-pro",
+                     "ready-4-it",
+                     "free-agents-plugin"
+                 ]
+}
