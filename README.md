@@ -97,10 +97,11 @@ Optional companion: install VSIX **AKC CCC VS** (`ready-4-it.akc-ccc-vs`) for th
 - Aktivierungsschlüssel / device slots
 - Pro feature gates (patterns, custom logos, prefs export, autostart, …)
 
-## Legal (copyright / freeware)
+## Legal (copyright / freemium)
 
 Copyright (c) 2026 ready-4-it / Nejat Philip Eryigit. All rights reserved.
-This Free edition is **freeware**, not MIT or other OSI open-source. See [`LICENSE`](LICENSE).
+This **public Free / Light** edition is the free tier of a **freemium** product
+(not MIT / not OSI open-source). Trial/Pro is a separate paid license. See [`LICENSE`](LICENSE).
 
 It is provided **as-is**, **without warranty**, **without liability** beyond mandatory law, and **without support obligation**.
 

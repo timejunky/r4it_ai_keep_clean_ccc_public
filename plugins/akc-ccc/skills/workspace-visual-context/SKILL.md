@@ -3,6 +3,8 @@ name: workspace-visual-context
 description: Resolve CCC workspace accent for Agents identity. Target tint surfaces are Agents Glass sidebar section + agent-panel — not IDE. Use when switching projects or confirming which workspace is active.
 ---
 
+<!-- Copyright (c) 2026 ready-4-it. Public Free is freemium (not MIT). Trial/Pro: https://www.ready-4-it.com/akc_ccc -->
+
 # Workspace visual context (CCC Free / Light)
 
 ## Target (Agents only — not IDE)
