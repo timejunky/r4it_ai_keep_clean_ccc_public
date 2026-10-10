@@ -99,7 +99,7 @@ Optional companion: install VSIX **AKC CCC VS** (`ready-4-it.akc-ccc-vs`) for th
 
 ## Legal (copyright / freemium)
 
-Copyright (c) 2026 ready-4-it / Nejat Philip Eryigit. All rights reserved.
+Copyright (c) 7/2025 ready-4-it / Nejat Philip Eryigit. All rights reserved.
 This **public Free / Light** edition is the free tier of a **freemium** product
 (not MIT / not OSI open-source). Trial/Pro is a separate paid license. See [`LICENSE`](LICENSE).
 

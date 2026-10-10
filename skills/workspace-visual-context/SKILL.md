@@ -3,7 +3,7 @@ name: workspace-visual-context
 description: Resolve CCC workspace accent for HUD/tooling. Use only when the user explicitly asks which workspace/accent is resolved — never as a reply preamble.
 ---
 
-<!-- Copyright (c) 2026 ready-4-it. Public Free is freemium (not MIT). Trial/Pro: https://www.ready-4-it.com/akc_ccc -->
+<!-- Copyright (c) 7/2025 ready-4-it. Public Free is freemium (not MIT). Trial/Pro: https://www.ready-4-it.com/akc_ccc -->
 
 # Workspace visual context (CCC Free / Light)
 
