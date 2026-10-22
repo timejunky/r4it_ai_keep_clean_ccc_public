@@ -28,7 +28,7 @@
                         "name":  "akc-ccc",
                         "displayName":  "AKC CCC — AI Keep Clean Context Control Center (Free)",
                         "source":  "./plugins/akc-ccc",
-                        "description":  "Free VS Code Agents / Copilot Chat plugin for multi-project workspace identity: HUD pill, optional IDE border cue, MCP tools (ccc_resolve_visual_context, ccc_apply_ide_border_cue). Upgrade path: Trial/Pro Project HUD + branding via ready-4-it.com/akc_ccc (Zebra module akc_ccc + activation) — not Marketplace checkout. Companion IDE Control Center VSIX: ready-4-it.akc-ccc-vs. Cursor Free uses .cursor-plugin in this repo (separate from this VS package).",
+                        "description":  "Free VS Code Agents / Copilot Chat plugin for multi-project workspace identity: optional IDE border cue, MCP tools (ccc_resolve_visual_context, ccc_apply_ide_border_cue). This package does not draw the Project HUD pill. Trial/Pro draws it from the licensed Agents package via ready-4-it.com/akc_ccc (Zebra module akc_ccc + activation) — not Marketplace checkout. Companion IDE Control Center VSIX: ready-4-it.akc-ccc-vs registers the Agents plugin and does not draw the pill. Cursor Free uses .cursor-plugin in this repo (separate from this VS package).",
                         "version":  "0.2.53",
                         "author":  {
                                        "name":  "ready-4-it",
