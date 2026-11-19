@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import{pickNavHit as e}from"../../navHost.mjs";export{pickVsCodeOpenFilesHint,pickVsCodeSidebarLabel,VSCODE_OPEN_FILES_ROW_PX}from"./vscode-open-files.mjs";export function shouldReadSessions(e={}){return!0}export function pickHit(s={}){return s.vscodeChat?.workspace?s.vscodeChat:s.vscodeSidebar?.workspace?s.vscodeSidebar:"vscode.sessions+active"===s.vscodeSessions?.source?s.vscodeSessions:e("vscode",s)}

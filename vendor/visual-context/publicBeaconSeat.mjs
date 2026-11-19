@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import t from"node:crypto";function n(t){return"string"==typeof t&&t.length>=32?t:""}export function resolvePublicBeaconSeat(e,i=()=>t.randomBytes(16).toString("hex")){const o=e&&"object"==typeof e?e:{};if(!0===o.agent_install_reported)return{skip:!0,id:"",stamp:{...o}};const r={...o};let s=n(r.install_id)||n(r.agent_instance_id);return s||(s=i(),!0!==r.install_reported||n(r.install_id)?r.install_id=s:r.agent_instance_id=s),{skip:!1,id:s,stamp:r}}

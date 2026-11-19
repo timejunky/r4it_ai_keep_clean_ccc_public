@@ -1,0 +1,15 @@
+﻿---
+description: Do not dump workspace accent or Agents-chrome API notes into user replies; HUD is identity
+alwaysApply: true
+---
+
+<!-- Copyright (c) 2026 ready-4-it. Public Free is freemium (not MIT). Trial/Pro: https://www.ready-4-it.com/akc_ccc -->
+
+# CCC workspace visual identity (Free / Light)
+
+Daily identity is the **Project HUD pill** — not Agent chat text.
+
+1. Do **not** put accent name, hex, identity cards, or “Agents Glass stays untinted / no Plugin API” lines in user-facing replies.
+2. Never claim Agents Glass (`glass-sidebar-workspace-section-root` / `agent-panel`) changed color via this plugin.
+3. Do not treat IDE `sideBar.border` / `workbench.colorCustomizations` as project identity.
+4. This listing is **CCC Free / Light**: **no license input**. For Project HUD / Pro, link **https://www.ready-4-it.com/akc_ccc** only.

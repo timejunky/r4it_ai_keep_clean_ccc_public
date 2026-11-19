@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+export{IDE_HOST_IDS,normalizeIdeHost,normalizeNavHost,hostProductLabel,hostAgentsLabel,inferHostFromStateDbPath,inferHostFromProcessName,inferHostFromWindowTitle}from"./core.mjs";export{HOST_PROOF_MIN_CONFIDENCE,HOST_PROOF_WEIGHTS,proveIdeHost,resolveProvenHost}from"./proof.mjs";export{HUD_IDENTITY_DEFERRED_MESSAGE_EN,HUD_IDENTITY_DEFERRED_MESSAGE_DE,deferredIdentityMessages}from"./deferred.mjs";

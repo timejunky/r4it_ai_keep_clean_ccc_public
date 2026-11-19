@@ -1,0 +1,4 @@
+{# help.topic.nav #}
+{% set title = messages['help.topic.nav.title'] %}
+{% set body = messages['help.topic.nav.body'] %}
+{% include '../layout.twig' with { title: title, body: body, messages: messages, topic: 'nav' } only %}

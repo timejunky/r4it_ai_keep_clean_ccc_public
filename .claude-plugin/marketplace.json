@@ -1,0 +1,72 @@
+{
+    "name":  "ready-4-it-ccc-agents",
+    "owner":  {
+                  "name":  "ready-4-it",
+                  "email":  "support@ready-4-it.com",
+                  "url":  "https://www.ready-4-it.com"
+              },
+    "metadata":  {
+                     "description":  "ready-4-it agent plugins for Visual Studio Code Agents / GitHub Copilot Chat. Free: AKC CCC workspace identity + MCP visual-context. Trial/Pro Project HUD and branding are available via ready-4-it.com/akc_ccc — not listed as a paid Agents catalog item. Cursor Agents use the .cursor-plugin channel in the same public repo.",
+                     "version":  "1.1.0",
+                     "pluginRoot":  "./plugins",
+                     "editions":  {
+                                      "free":  {
+                                                   "plugin":  "akc-ccc",
+                                                   "channel":  "public-git-marketplace"
+                                               },
+                                      "trial_pro":  {
+                                                        "plugin":  "akc-ccc-pro",
+                                                        "channel":  "licensed-akc_ccc",
+                                                        "store":  "https://www.ready-4-it.com/akc_ccc",
+                                                        "listedInThisMarketplace":  false,
+                                                        "note":  "One CCC device activation unlocks both Cursor and VS Code on the same machine — not published in this Free marketplace.json plugins array."
+                                                    }
+                                  }
+                 },
+    "plugins":  [
+                    {
+                        "name":  "akc-ccc",
+                        "displayName":  "AKC CCC — AI Keep Clean Context Control Center (Free)",
+                        "source":  "./plugins/akc-ccc",
+                        "logo":  "assets/logo.png",
+                        "description":  "Free VS Code Agents / Copilot Chat plugin for multi-project workspace identity: optional IDE border cue and MCP tools (ccc_resolve_visual_context, ccc_apply_ide_border_cue). For the floating Project HUD pill and Trial/Pro branding, see ready-4-it.com/akc_ccc. Companion VS Code extension: ready-4-it.akc-ccc-vs.",
+                        "version":  "0.2.58",
+                        "author":  {
+                                       "name":  "ready-4-it",
+                                       "email":  "support@ready-4-it.com",
+                                       "url":  "https://www.ready-4-it.com"
+                                   },
+                        "homepage":  "https://www.ready-4-it.com/akc_ccc",
+                        "repository":  "https://github.com/timejunky/r4it_ai_keep_clean_ccc_public",
+                        "license":  "SEE LICENSE IN LICENSE",
+                        "category":  "developer-tools",
+                        "keywords":  [
+                                         "ccc",
+                                         "akc-ccc",
+                                         "ai-keep-clean",
+                                         "control-center",
+                                         "context-control-center",
+                                         "agents",
+                                         "vscode-agents",
+                                         "github-copilot",
+                                         "copilot-chat",
+                                         "agent-plugin",
+                                         "workspace",
+                                         "project-identity",
+                                         "workspace-accent",
+                                         "multi-project",
+                                         "mcp",
+                                         "visual-context",
+                                         "ready-4-it"
+                                     ],
+                        "tags":  [
+                                     "vscode",
+                                     "agents",
+                                     "copilot",
+                                     "identity",
+                                     "mcp",
+                                     "free"
+                                 ]
+                    }
+                ]
+}

@@ -1,0 +1,3 @@
+{# Wraps help topic title + body via AKC-style partials. Context: title, body, messages, topic #}
+{% include 'partials/_title.twig' with { title: title } only %}
+{% include 'partials/_body.twig' with { body: body } only %}

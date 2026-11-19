@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+export const PROJECT_MARKER_EMOJIS=Object.freeze(["🔵","🟢","🟣","🟠","🟡","🔴","⚪","🟤","💠","🔷","🔶","⭐","🍀","🎯","🧩","🧪","🌙","☀️","🌊","🔥"]);export function hashWorkspaceId(t){const e=String(t||"").trim()||"_unknown";let r=2166136261;for(let t=0;t<e.length;t++)r^=e.charCodeAt(t),r=Math.imul(r,16777619);return r>>>0}export function markerEmojiForWorkspaceId(t){const e=hashWorkspaceId(t);return PROJECT_MARKER_EMOJIS[e%PROJECT_MARKER_EMOJIS.length]}

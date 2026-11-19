@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import{isHudEnabled as r,setHudEnabled as e}from"./store.mjs";export function enable(r){return e(!0,r)}export function disable(r){return e(!1,r)}export function isEnabled(e){return r(e)}

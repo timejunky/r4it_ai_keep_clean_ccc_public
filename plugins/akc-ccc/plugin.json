@@ -1,0 +1,32 @@
+{
+    "$schema":  "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+    "name":  "akc-ccc",
+    "version":  "0.2.58",
+    "logo":  "assets/logo.png",
+    "description":  "AI Keep Clean Context Control Center (CCC) Free for Visual Studio Code Agents / GitHub Copilot Chat — workspace identity, optional IDE border cue, MCP visual-context tools. Trial/Pro Project HUD and branding: ready-4-it.com/akc_ccc.",
+    "author":  {
+                   "name":  "ready-4-it",
+                   "email":  "support@ready-4-it.com",
+                   "url":  "https://www.ready-4-it.com"
+               },
+    "homepage":  "https://www.ready-4-it.com/akc_ccc",
+    "repository":  "https://github.com/timejunky/r4it_ai_keep_clean_ccc_public",
+    "license":  "SEE LICENSE IN LICENSE",
+    "keywords":  [
+                     "ccc",
+                     "akc-ccc",
+                     "ai-keep-clean-ccc",
+                     "control-center",
+                     "context-control-center",
+                     "agents",
+                     "vscode-agents-plugin",
+                     "github-copilot-chat",
+                     "workspace",
+                     "project-identity",
+                     "workspace-accent",
+                     "multi-workspace",
+                     "mcp-server",
+                     "visual-context",
+                     "ready-4-it"
+                 ]
+}

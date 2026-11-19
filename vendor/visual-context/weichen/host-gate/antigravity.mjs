@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import{isHostEnabled as t,setHostEnabled as r}from"./store.mjs";export function enable(t){return r("antigravity",!0,t)}export function disable(t){return r("antigravity",!1,t)}export function isEnabled(r){return t("antigravity",r)}

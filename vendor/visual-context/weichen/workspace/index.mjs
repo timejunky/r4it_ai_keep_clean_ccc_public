@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import{normalizeNavHost as o}from"../../host-proof/core.mjs";import*as r from"./antigravity.mjs";import*as s from"./cursor.mjs";import*as t from"./vscode.mjs";export function pickWorkspaceWeiche(m){const i=o(m);return"vscode"===i?t:"cursor"===i?s:"antigravity"===i?r:null}export{r as antigravityWeiche,s as cursorWeiche,t as vscodeWeiche};

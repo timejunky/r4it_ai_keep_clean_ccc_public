@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import{pickNavHit as t}from"../../navHost.mjs";export function shouldReadSessions(){return!1}export function pickHit(i={}){return i.antigravity?i.antigravity:i.antigravityBridge?i.antigravityBridge:i.antigravityRecent?i.antigravityRecent:t("antigravity",i)}

@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+export{normalizeNavHost}from"./host-proof/core.mjs";import{normalizeNavHost as o}from"./host-proof/core.mjs";export function pickNavHit(s,r={}){const e=o(s);return"vscode"===e?r.vscodeSidebar||r.vscodeTitle||r.vscodeSessions||r.vscodeBridge||null:"cursor"===e?r.cursorGlass||r.cursorSidebar||null:"antigravity"===e?r.antigravity||null:r.cursorGlass||r.vscodeSessions||r.vscodeBridge||r.vscodeSidebar||r.vscodeTitle||null}

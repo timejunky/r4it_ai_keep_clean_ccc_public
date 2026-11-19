@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+// Copyright (c) 2026 ready-4-it
+import _0x680004 from'node:fs';import _0x3f2652 from'node:path';import{fileURLToPath,pathToFileURL}from'node:url';const here=_0x3f2652['dirname'](fileURLToPath(import.meta.url)),candidates=[_0x3f2652['join'](here,'..','src','visual-context','ensureProjectHud.mjs'),_0x3f2652['join'](here,'..','visual-context','ensureProjectHud.mjs')],modPath=candidates['find'](_0x21409b=>_0x680004['existsSync'](_0x21409b));!modPath&&(console['error']('ensureProjectHud.mjs\x20not\x20found\x20(run\x20npm\x20run\x20plugin:install\x20from\x20CCC\x20DEV).'),process['exit'](0x1));const {stopProjectHud}=await import(pathToFileURL(modPath).href),result=stopProjectHud();console['log'](result['message']),process['exit'](result['ok']?0x0:0x1);

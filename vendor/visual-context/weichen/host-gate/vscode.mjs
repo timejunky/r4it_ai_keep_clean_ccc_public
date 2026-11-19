@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import{isHostEnabled as e,setHostEnabled as o}from"./store.mjs";export function enable(e){return o("vscode",!0,e)}export function disable(e){return o("vscode",!1,e)}export function isEnabled(o){return e("vscode",o)}

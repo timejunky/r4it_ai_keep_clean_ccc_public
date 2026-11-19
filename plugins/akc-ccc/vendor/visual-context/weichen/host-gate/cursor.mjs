@@ -1,0 +1,2 @@
+// Copyright (c) 2026 ready-4-it
+import{isHostEnabled as r,setHostEnabled as o}from"./store.mjs";export function enable(r){return o("cursor",!0,r)}export function disable(r){return o("cursor",!1,r)}export function isEnabled(o){return r("cursor",o)}
