@@ -6,7 +6,14 @@
   $btnAboutUpdate.Add_Click({
     try {
       if ($script:HudAsyncNodeProc -and $script:HudAsyncNodeProc.Proc -and -not $script:HudAsyncNodeProc.Proc.HasExited) { return }
-      if ((Get-Command Test-HudNeedsZebraUpdateConsent -ErrorAction SilentlyContinue) -and (Test-HudNeedsZebraUpdateConsent)) {
+      $licensedZebra = (Get-Command Test-HudUsesLicensedZebra -ErrorAction SilentlyContinue) -and (Test-HudUsesLicensedZebra)
+      $zebraCli = Join-Path $hudRoot 'ccc-zebra-update-check.mjs'
+      $zebraApplyCli = Join-Path $hudRoot 'ccc-zebra-apply-update.mjs'
+      $publicCli = Join-Path $hudRoot 'ccc-public-update-check.mjs'
+      $publicApplyCli = Join-Path $hudRoot 'ccc-public-apply-update.mjs'
+      $useLicensedZebra = $licensedZebra -and (Test-Path -LiteralPath $zebraCli)
+
+      if ($useLicensedZebra -and (Get-Command Test-HudNeedsZebraUpdateConsent -ErrorAction SilentlyContinue) -and (Test-HudNeedsZebraUpdateConsent)) {
         if (Get-Command Mark-HudZebraNetworkConsentPrompted -ErrorAction SilentlyContinue) {
           Mark-HudZebraNetworkConsentPrompted
         }
@@ -14,10 +21,7 @@
         if (Get-Command Grant-HudZebraNetworkConsent -ErrorAction SilentlyContinue) {
           Grant-HudZebraNetworkConsent
         }
-        $grantCli = Join-Path $hudRoot 'ccc-zebra-update-check.mjs'
-        if (Test-Path -LiteralPath $grantCli) {
-          & node $grantCli --grant-consent 2>$null | Out-Null
-        }
+        & node $zebraCli --grant-consent 2>$null | Out-Null
         if ($ui.chkZebraConsent) {
           $ui.syncing = $true
           try { $ui.chkZebraConsent.Checked = $true } finally { $ui.syncing = $false }
@@ -31,32 +35,59 @@
           if ($fh.host) { $hostArgs += @('--host', [string]$fh.host) }
         } catch { }
       }
-      $pingCli = Join-Path $hudRoot 'ccc-zebra-usage-ping.mjs'
-      if (Test-Path -LiteralPath $pingCli) {
-        & node $pingCli @hostArgs 2>$null | Out-Null
+      if ($useLicensedZebra) {
+        $pingCli = Join-Path $hudRoot 'ccc-zebra-usage-ping.mjs'
+        if (Test-Path -LiteralPath $pingCli) {
+          & node $pingCli @hostArgs 2>$null | Out-Null
+        }
       }
-      $licensedZebra = (Get-Command Test-HudUsesLicensedZebra -ErrorAction SilentlyContinue) -and (Test-HudUsesLicensedZebra)
-      $cli = Join-Path $hudRoot 'ccc-zebra-update-check.mjs'
-      $applyCli = Join-Path $hudRoot 'ccc-zebra-apply-update.mjs'
-      if (-not $licensedZebra -or -not (Test-Path -LiteralPath $cli)) {
-        Show-HudMessageBox (Get-HudT 'about.update.freePingOk') -Icon Information | Out-Null
+
+      $pluginRoot = Join-Path $env:USERPROFILE '.cursor\plugins\local\ai-keep-clean-ccc'
+      try {
+        $candRoot = (Resolve-Path -LiteralPath (Join-Path $hudRoot '..\..') -ErrorAction Stop).Path
+        if ((Test-Path -LiteralPath (Join-Path $candRoot '.cursor-plugin\plugin.json')) -or (Test-Path -LiteralPath (Join-Path $candRoot 'plugin.json'))) {
+          $pluginRoot = $candRoot
+        }
+      } catch { }
+
+      if (-not $useLicensedZebra) {
+        if (-not (Test-Path -LiteralPath $publicCli)) {
+          Show-HudMessageBox (Get-HudT 'about.update.freePingOk') -Icon Information | Out-Null
+          return
+        }
+        $pubCheckArgs = @('--plugin-root', $pluginRoot)
+        $updCtx = @{
+          applyCli      = $publicApplyCli
+          checkArgs     = $pubCheckArgs
+          useDevZebra   = $false
+          busyBtn       = $btnAboutUpdate
+          pluginRoot    = $pluginRoot
+          hudScriptRoot = $hudRoot
+        }
+        $started = Start-HudAsyncNodeCli -Cli $publicCli -NodeArgs $pubCheckArgs -BusyControl $btnAboutUpdate -BusyText (Get-HudT 'about.update.checking') -OnComplete {
+          param($raw, $err)
+          Show-HudAboutUpdateCheckResult -Raw $raw -Err $err -Ctx $updCtx
+        }
+        if (-not $started) {
+          Show-HudMessageBox (Get-HudT 'about.update.checkFail') -Icon Warning | Out-Null
+        }
         return
       }
+
       $zebraArgs = @($hostArgs)
       $devMarker = Join-Path $env:USERPROFILE '.ccc\zebra-dev'
       $useDevZebra = ($env:CCC_ZEBRA_DEV -eq '1') -or (Test-Path -LiteralPath $devMarker)
       if ($useDevZebra) { $zebraArgs += '--dev' }
       $checkArgs = @($zebraArgs)
-      $pluginRoot = Join-Path $env:USERPROFILE '.cursor\plugins\local\ai-keep-clean-ccc'
       $updCtx = @{
-        applyCli      = $applyCli
+        applyCli      = $zebraApplyCli
         checkArgs     = $checkArgs
         useDevZebra   = $useDevZebra
         busyBtn       = $btnAboutUpdate
         pluginRoot    = $pluginRoot
         hudScriptRoot = $hudRoot
       }
-      $started = Start-HudAsyncNodeCli -Cli $cli -NodeArgs $checkArgs -BusyControl $btnAboutUpdate -BusyText (Get-HudT 'about.update.checking') -OnComplete {
+      $started = Start-HudAsyncNodeCli -Cli $zebraCli -NodeArgs $checkArgs -BusyControl $btnAboutUpdate -BusyText (Get-HudT 'about.update.checking') -OnComplete {
         param($raw, $err)
         Show-HudAboutUpdateCheckResult -Raw $raw -Err $err -Ctx $updCtx
       }

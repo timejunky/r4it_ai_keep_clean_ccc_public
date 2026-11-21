@@ -200,6 +200,11 @@ function Update-AgentsSidebarLabelVscode($agentsHwnd, [string]$hostId) {
     if ($script:vsCodeInDone -or $script:vsCodeClearSidebar) {
       $script:sidebarLabel = ''; $script:vsCodeClearSidebar = $false
     } elseif (-not [string]::IsNullOrWhiteSpace($got)) { $script:sidebarLabel = [string]$got }
+    elseif (-not [string]::IsNullOrWhiteSpace($script:vsCodeSelectedChat)) {
+      # Chat row has no owner/repo group. Drop the previous label so the
+      # chat title can beat a stale sidebar project.
+      $script:sidebarLabel = ''
+    }
     $script:sidebarByHost[$hostId] = $script:sidebarLabel
   } catch { }
 }
@@ -242,7 +247,7 @@ function Get-HudFocusHostInfo {
   return $null
 }
 
-function Test-FocusHostThrottle([string]$path, [string]$hostId, [string]$sideOut, [bool]$Force) {
+function Test-FocusHostThrottle([string]$path, [string]$hostId, [string]$sideOut, [string]$chatOut, [bool]$Force) {
   if ($Force -or -not (Test-Path -LiteralPath $path)) { return $false }
   try {
     $prev = Get-Content -LiteralPath $path -Raw -ErrorAction Stop | ConvertFrom-Json
@@ -250,7 +255,7 @@ function Test-FocusHostThrottle([string]$path, [string]$hostId, [string]$sideOut
     if ($prev.updatedAt) { $prevAgeMs = ((Get-Date).ToUniversalTime() - [DateTime]::Parse($prev.updatedAt)).TotalMilliseconds }
     # VS Code needs a fresh stamp so hud-watch stays on preferHost=vscode (≤30 s).
     $throttleMs = if ($hostId -eq 'vscode' -or $hostId -eq 'antigravity') { 400 } else { 5000 }
-    return ($prev.host -eq $hostId -and [string]$prev.sidebarLabel -eq $sideOut -and $prevAgeMs -ge 0 -and $prevAgeMs -lt $throttleMs)
+    return ($prev.host -eq $hostId -and [string]$prev.sidebarLabel -eq $sideOut -and [string]$prev.chatTitle -eq $chatOut -and $prevAgeMs -ge 0 -and $prevAgeMs -lt $throttleMs)
   } catch { return $false }
 }
 
@@ -264,11 +269,13 @@ function Write-HudFocusHost {
   if ((Get-Command Test-HudHostEnabled -ErrorAction SilentlyContinue) -and -not (Test-HudHostEnabled $hostId)) { return }
   $path    = Join-Path $env:USERPROFILE '.cursor\ccc-hud-focus-host.json'
   $sideOut = if ($hostId -eq 'vscode' -or $hostId -eq 'cursor' -or $hostId -eq 'antigravity') { [string]$script:sidebarLabel } else { '' }
-  $payload = @{ host = $hostId; title = $t; sidebarLabel = $sideOut; updatedAt = (Get-Date).ToUniversalTime().ToString('o') } | ConvertTo-Json -Compress
+  # Selected chat is live on click. isActive in state.vscdb is only flushed when the pill is dragged.
+  $chatOut = if ($hostId -eq 'vscode') { [string]$script:vsCodeSelectedChat } else { '' }
+  $payload = @{ host = $hostId; title = $t; sidebarLabel = $sideOut; chatTitle = $chatOut; updatedAt = (Get-Date).ToUniversalTime().ToString('o') } | ConvertTo-Json -Compress
   try {
     $dir = Split-Path $path -Parent
     if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
-    if (Test-FocusHostThrottle $path $hostId $sideOut ([bool]$Force)) { return }
+    if (Test-FocusHostThrottle $path $hostId $sideOut $chatOut ([bool]$Force)) { return }
     # UTF8 *without* BOM — Node JSON.parse rejects EF BB BF
     $utf8NoBom = New-Object System.Text.UTF8Encoding $false
     [System.IO.File]::WriteAllText($path, $payload, $utf8NoBom)

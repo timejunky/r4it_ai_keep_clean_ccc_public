@@ -330,5 +330,18 @@
   "about.update.zebraCrmHashMissing": "Lisansınız yerelde geçerli, çevrimiçi teslimat hâlâ eşitleniyor. Kısa süre sonra yeniden deneyin veya ready-4-it.com üzerinde Lisanslarım bölümünden indirin.",
   "common.yes": "Yes",
   "common.no": "No",
-  "settings.style.stripes.confirmLogo": "An active logo is set. Replace it with the stripes pattern?"
+  "settings.style.stripes.confirmLogo": "An active logo is set. Replace it with the stripes pattern?",
+  "pro.gate.title": "AKC CCC Pro",
+  "pro.gate.feature": "Pro özelliği: {feature}",
+  "pro.gate.status": "Mevcut durum: {status}",
+  "pro.gate.openPrompt": "Etkinleştirme anahtarını (R4IT…) girmek veya düzeltmek için Etkinleştirme sekmesini şimdi açmak ister misiniz?",
+  "pro.gate.freeBody": "Bu özellik AKC CCC Pro sürümüne dahildir.",
+  "pro.gate.buy": "Satın alma / İndirme: {url}",
+  "pro.limit.title": "CCC Sınırı",
+  "pro.limit.body": "Sınıra ulaşıldı: {label} ({current} / maks {max}, seviye: {tier})",
+  "activation.msg.title": "CCC Etkinleştirme",
+  "activation.msg.needToken": "Lütfen geçerli bir etkinleştirme anahtarı (R4IT…) yapıştırın.",
+  "activation.msg.urlCopied": "Etkinleştirme URLsi kopyalandı.\nWeb sitesine satın alma lisans anahtarınızı girin, ardından etkinleştirme anahtarını (R4IT…) buraya yapıştırın.",
+  "activation.msg.result": "Durum: {status}\nSeviye: {tier}",
+  "activation.msg.keptExisting": "Giriş reddedildi: {status}\nMevcut aktif lisansınız ({tier}) değiştirilmeden korundu."
 }

@@ -47,12 +47,14 @@ function Get-CccVersionFromIdentity($dirs) {
 
 function Get-CccVersionFromPackage($dirs) {
   foreach ($dir in $dirs) {
-    $pj = Join-Path $dir 'package.json'
-    if (-not (Test-Path -LiteralPath $pj)) { continue }
-    try {
-      $json = Get-Content -LiteralPath $pj -Raw -ErrorAction Stop | ConvertFrom-Json
-      if ($json.version) { return [string]$json.version }
-    } catch { }
+    foreach ($rel in @('package.json', '.cursor-plugin\plugin.json', 'plugin.json')) {
+      $pj = Join-Path $dir $rel
+      if (-not (Test-Path -LiteralPath $pj)) { continue }
+      try {
+        $json = Get-Content -LiteralPath $pj -Raw -Encoding UTF8 -ErrorAction Stop | ConvertFrom-Json
+        if ($json.version -and ([string]$json.version) -ne '0.0.0') { return [string]$json.version }
+      } catch { }
+    }
   }
   return $null
 }
@@ -65,7 +67,7 @@ function Get-CccVersionBuild($dirs) {
       if ($count) { return ([string]$count).Trim() }
     } catch { }
   }
-  return '0'
+  return ''
 }
 
 function Get-CccVersion {
@@ -76,7 +78,7 @@ function Get-CccVersion {
   $version = if ($id -and $id.version) { $id.version } else { Get-CccVersionFromPackage $dirs }
   if (-not $version) { $version = '0.0.0' }
   $build = if ($id -and $id.build) { $id.build } else { Get-CccVersionBuild $dirs }
-  $script:cachedVersion = "$version.$build"
+  $script:cachedVersion = if ($build -and $build -ne '0') { "$version.$build" } else { "$version" }
   return $script:cachedVersion
 }
 

@@ -330,5 +330,18 @@
   "about.update.zebraCrmHashMissing": "Är Lizenz ass lokal gëlteg, d’Online-Bereetstellung gëtt nach ofgeglach. Probéiert gläich nach eng Kéier oder luet ënner Meng Lizenzen op ready-4-it.com erof.",
   "common.yes": "Yes",
   "common.no": "No",
-  "settings.style.stripes.confirmLogo": "An active logo is set. Replace it with the stripes pattern?"
+  "settings.style.stripes.confirmLogo": "An active logo is set. Replace it with the stripes pattern?",
+  "pro.gate.title": "AKC CCC Pro",
+  "pro.gate.feature": "Pro-Feature: {feature}",
+  "pro.gate.status": "Aktuelle Status: {status}",
+  "pro.gate.openPrompt": "Elo op Aktivéierung wiesselen, fir den Aktivéierungsschlëssel (R4IT…) anzeginn oder ze korrigéieren?",
+  "pro.gate.freeBody": "Dës Funktioun ass an AKC CCC Pro enthalen.",
+  "pro.gate.buy": "Kaf / Download: {url}",
+  "pro.limit.title": "CCC Limit",
+  "pro.limit.body": "Limit erreecht: {label} ({current} / max {max}, Stuf: {tier})",
+  "activation.msg.title": "CCC Aktivéierung",
+  "activation.msg.needToken": "W.e.g. e gültegen Aktivéierungsschlëssel (R4IT…) afügen.",
+  "activation.msg.urlCopied": "Aktivéierungs-URL kopéiert.\nOp der Websäit de Kaf-Lizenzschlëssel aginn, duerno den Aktivéierungsschlëssel (R4IT…) hei afügen.",
+  "activation.msg.result": "Status: {status}\nStuf: {tier}",
+  "activation.msg.keptExisting": "Agab ofgeleent: {status}\nDéi bestoend aktiv Lizenz ({tier}) bleift onverännert."
 }

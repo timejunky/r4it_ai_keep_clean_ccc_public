@@ -55,7 +55,10 @@ function Show-HudAboutUpdateCheckResult {
   $applyArgs = @('--url', ([string]$j.downloadUrl))
   if ($latest) { $applyArgs += @('--version', $latest) }
   $updateSource = [string]$j.source
-  if ($updateSource -eq 'github-public' -or $updateSource -eq 'public') { $applyArgs += @('--source', 'github-public') }
+  if ($updateSource -eq 'github-public' -or $updateSource -eq 'public') {
+    $applyArgs += @('--source', 'github-public')
+    if ($Ctx.pluginRoot) { $applyArgs += @('--plugin-root', [string]$Ctx.pluginRoot) }
+  }
   if ($Ctx.useDevZebra) { $applyArgs += '--dev' }
   if ($Ctx.checkArgs -contains '--host') {
     $hi = [array]::IndexOf($Ctx.checkArgs, '--host')

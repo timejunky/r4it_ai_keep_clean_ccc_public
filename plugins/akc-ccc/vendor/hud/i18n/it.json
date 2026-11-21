@@ -330,5 +330,18 @@
   "about.update.zebraCrmHashMissing": "La licenza è valida in locale; la consegna online si sta ancora sincronizzando. Riprova tra poco o scarica da Le mie licenze su ready-4-it.com.",
   "common.yes": "Yes",
   "common.no": "No",
-  "settings.style.stripes.confirmLogo": "An active logo is set. Replace it with the stripes pattern?"
+  "settings.style.stripes.confirmLogo": "An active logo is set. Replace it with the stripes pattern?",
+  "pro.gate.title": "AKC CCC Pro",
+  "pro.gate.feature": "Funzione Pro: {feature}",
+  "pro.gate.status": "Stato attuale: {status}",
+  "pro.gate.openPrompt": "Aprire Attivazione ora per inserire o correggere la chiave di attivazione (R4IT…)?",
+  "pro.gate.freeBody": "Questa funzione è inclusa in AKC CCC Pro.",
+  "pro.gate.buy": "Acquisto / Download: {url}",
+  "pro.limit.title": "Limite CCC",
+  "pro.limit.body": "Limite raggiunto: {label} ({current} / max {max}, livello: {tier})",
+  "activation.msg.title": "Attivazione CCC",
+  "activation.msg.needToken": "Incolla una chiave di attivazione valida (R4IT…).",
+  "activation.msg.urlCopied": "URL di attivazione copiato.\nInserisci la chiave di acquisto sul sito e incolla qui la chiave di attivazione (R4IT…).",
+  "activation.msg.result": "Stato: {status}\nLivello: {tier}",
+  "activation.msg.keptExisting": "Input rifiutato: {status}\nLa licenza attiva esistente ({tier}) rimane invariata."
 }

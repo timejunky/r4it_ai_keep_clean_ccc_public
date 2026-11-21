@@ -21,6 +21,7 @@ function Show-SettingsPanel {
   $script:settingsStartPage = if ([string]::IsNullOrWhiteSpace($StartPage)) { '' } else { $StartPage.Trim().ToLowerInvariant() }
 
   if (Get-Command Stop-HudScrollPageLayouts -ErrorAction SilentlyContinue) { Stop-HudScrollPageLayouts }
+  $script:FocusHudActivationToken = $null
   $script:HudPageLayoutState = @{}
   $script:AboutLayoutW = $null
   $script:AboutScrollMinH = $null
@@ -250,6 +251,29 @@ function Show-SettingsPanel {
   }
 
   function Show-Page([string]$name) {
+    $invalidLicense = $false
+    if (Get-Command Test-HudStoredLicenseInvalid -ErrorAction SilentlyContinue) {
+      try { $invalidLicense = [bool](Test-HudStoredLicenseInvalid) } catch { $invalidLicense = $false }
+    }
+    if ($invalidLicense -and ($name -eq 'einst' -or $name -eq 'speicher')) {
+      $name = 'lizenz'
+      if (-not $script:hudInvalidLicensePromptBusy) {
+        $script:hudInvalidLicensePromptBusy = $true
+        $promptInvalid = {
+          try { Show-InvalidLicenseBlocker } catch { }
+          finally { $script:hudInvalidLicensePromptBusy = $false }
+        }
+        try {
+          if ($dlg.IsHandleCreated) {
+            [void]$dlg.BeginInvoke([System.Windows.Forms.MethodInvoker]$promptInvalid)
+          } else {
+            & $promptInvalid
+          }
+        } catch {
+          & $promptInvalid
+        }
+      }
+    }
     $pages.SuspendLayout()
     try {
       $ui.pageEinst.Visible = ($name -eq 'einst')
@@ -1437,7 +1461,7 @@ function Show-SettingsPanel {
         $ui.syncing = $true
         try { $ui.rbGlobal.Checked = $true } finally { $ui.syncing = $false }
       }
-      if ($script:hasActivationCli) { Show-HudProHint (Get-HudT 'settings.scope.project') }
+      if ($script:hasActivationCli) { Show-ProUpgradeHint (Get-HudT 'settings.scope.project') }
       return
     }
     Sync-FromInspector
@@ -1637,7 +1661,11 @@ function Show-SettingsPanel {
   $ui.pageHilfe = New-Page
   $ui.pageLizenz = New-Page
   $ui.pageAbout = New-Page
-  $ui.pageEinst.Visible = $true
+  $openOnLicense = $false
+  if (Get-Command Test-HudStoredLicenseInvalid -ErrorAction SilentlyContinue) {
+    try { $openOnLicense = [bool](Test-HudStoredLicenseInvalid) } catch { $openOnLicense = $false }
+  }
+  if ($openOnLicense) { $ui.pageLizenz.Visible = $true } else { $ui.pageEinst.Visible = $true }
 
   # Explicit nav tabs (no MenuStrip — it painted over content and hid page titles)
   $storTabsPath = Join-Path $PSScriptRoot 'winforms-storage-tabs.ps1'
@@ -1705,6 +1733,21 @@ function Show-SettingsPanel {
         $btn.ForeColor = $menuInk
       }
       $btn.Invalidate()
+    }
+    $invalidNav = $false
+    if (Get-Command Test-HudStoredLicenseInvalid -ErrorAction SilentlyContinue) {
+      try { $invalidNav = [bool](Test-HudStoredLicenseInvalid) } catch { $invalidNav = $false }
+    }
+    foreach ($lockedKey in @('einst', 'speicher')) {
+      $lockedBtn = $ui.navButtons[$lockedKey]
+      if (-not $lockedBtn) { continue }
+      if ($invalidNav) {
+        $lockedBtn.ForeColor = [System.Drawing.Color]::FromArgb(128, 132, 138)
+        $lockedBtn.Cursor = [System.Windows.Forms.Cursors]::No
+      } else {
+        $lockedBtn.Cursor = [System.Windows.Forms.Cursors]::Hand
+      }
+      $lockedBtn.Invalidate()
     }
   }
   $script:SetHudNavActive = { param([string]$n) Set-HudNavActive $n }
@@ -1801,6 +1844,10 @@ function Show-SettingsPanel {
       $ui.lblProIcon.Text = "Logos $logoCount/$logoMax · Profile $profCount/$profMax"
     }
     # Do not rewrite markerMode in prefs — Free only hides Pro modes at display time.
+    if ($script:SetHudNavActive) {
+      $cur = if ($script:hudSettingsPage) { [string]$script:hudSettingsPage } else { 'einst' }
+      & $script:SetHudNavActive $cur
+    }
   }
 
   # ========== SPEICHER / STORAGE (tabs + ? help drawer — Pro only; stripped in Public) ==========
@@ -2300,7 +2347,12 @@ function Show-SettingsPanel {
     # Do not Apply-PrefsVisual here: the pill is already laid out. A rebuild while
     # the form is hidden/parked resets marker/label (name under the orb).
     try {
-      [void]$dlg.BeginInvoke([System.Windows.Forms.MethodInvoker]{ Apply-SettingsLayout })
+      [void]$dlg.BeginInvoke([System.Windows.Forms.MethodInvoker]{
+        Apply-SettingsLayout
+        if ($page -eq 'lizenz' -and $script:FocusHudActivationToken) {
+          try { & $script:FocusHudActivationToken } catch { }
+        }
+      })
     } catch { Apply-SettingsLayout }
     } catch { }
   })
@@ -2348,6 +2400,7 @@ function Show-SettingsPanel {
   } finally {
     $script:settingsOpen = $false
     $script:settingsDlg = $null
+    $script:FocusHudActivationToken = $null
   }
   if ($script:reopenSettingsAfterLang) {
     $script:reopenSettingsAfterLang = $false

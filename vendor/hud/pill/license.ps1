@@ -68,6 +68,11 @@ function Test-HudLicenseAccepted {
   return -not [string]::IsNullOrWhiteSpace([string]$script:licenseToken)
 }
 
+function Test-HudUsesLicensedZebra {
+  # Public/Free stays on Marketplace and GitHub. Trial and Pro use Zebra.
+  return (Test-HudLicenseAccepted)
+}
+
 function Get-HudLicenseExpiryInfo {
   # Returns hashtable: hasExp, fractionLeft (0..1), daysLeft, expDate, expired, iat, exp
   $out = @{
@@ -98,43 +103,81 @@ function Get-HudLicenseExpiryInfo {
   } catch { return $out }
 }
 
+function Format-HudProcessArg([string]$arg) {
+  if ($null -eq $arg) { return '""' }
+  if ($arg -notmatch '[\s"]') { return $arg }
+  return '"' + ($arg.Replace('"', '\"')) + '"'
+}
+
 function Invoke-CccActivationCli([string[]]$cliArgs) {
   $cli = Join-Path $script:HudScriptRoot 'ccc-activation.mjs'
   if (-not (Test-Path -LiteralPath $cli)) { return $null }
+  $node = $null
+  try { $node = (Get-Command node -ErrorAction Stop).Source } catch { return $null }
   try {
     # Exit code 1 = activate rejected; stdout still carries JSON status — do not treat as hard fail.
-    $prevEap = $ErrorActionPreference
-    $ErrorActionPreference = 'Continue'
-    $raw = & node $cli @cliArgs 2>$null
-    $ErrorActionPreference = $prevEap
+    # node.exe is a console program. The call operator opens a CMD window from the windowless pill.
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $node
+    $parts = New-Object System.Collections.Generic.List[string]
+    [void]$parts.Add((Format-HudProcessArg $cli))
+    foreach ($a in @($cliArgs)) { [void]$parts.Add((Format-HudProcessArg ([string]$a))) }
+    $psi.Arguments = ($parts -join ' ')
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    $psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
+    if ($script:HudScriptRoot) { $psi.WorkingDirectory = [string]$script:HudScriptRoot }
+    $proc = New-Object System.Diagnostics.Process
+    $proc.StartInfo = $psi
+    if (-not $proc.Start()) { return $null }
+    $outTask = $proc.StandardOutput.ReadToEndAsync()
+    $errTask = $proc.StandardError.ReadToEndAsync()
+    $proc.WaitForExit()
+    $raw = $outTask.GetAwaiter().GetResult()
+    $null = $errTask.GetAwaiter().GetResult()
     if ([string]::IsNullOrWhiteSpace($raw)) { return $null }
-    $line = (@($raw) | Where-Object { $_ -and "$_".Trim().StartsWith('{') } | Select-Object -Last 1)
+    $line = (@($raw -split '\r?\n') | Where-Object { $_ -and "$_".Trim().StartsWith('{') } | Select-Object -Last 1)
     if (-not $line) { return $null }
     return ($line | ConvertFrom-Json)
   } catch { return $null }
 }
 
 function Activate-License([string]$token) {
+  $script:lastActivationKeptExisting = $false
+  $script:lastActivationMessage = ''
   $g = Invoke-CccActivationCli @('activate', '--token', $token)
   if ($null -eq $g) {
     $script:licenseStatus = 'Aktivierung fehlgeschlagen (CLI)'
     $script:hudStatusText = $script:licenseStatus
+    $script:lastActivationMessage = $script:licenseStatus
     Refresh-HudGate
     return $false
   }
-  $script:licenseToken = $token
-  Sync-HudLicenseExpiryFromToken $token
+  $keptExisting = $false
+  try { $keptExisting = [bool]$g.keptExisting } catch { $keptExisting = $false }
+  $script:lastActivationKeptExisting = $keptExisting
+  if (-not $keptExisting) {
+    $script:licenseToken = $token
+    Sync-HudLicenseExpiryFromToken $token
+  }
   Apply-HudGateFromObject $g
+  $rejectMsg = ''
+  try { if ($g.rejectStatusText) { $rejectMsg = [string]$g.rejectStatusText } } catch { }
   $script:licenseStatus = if ($g.statusText) { [string]$g.statusText } else { 'Aktivierung' }
   $script:hudStatusText = $script:licenseStatus
+  $script:lastActivationMessage = if (-not [string]::IsNullOrWhiteSpace($rejectMsg)) { $rejectMsg } else { $script:licenseStatus }
   if ([bool]$g.ok -or [bool]$g.activated) {
     Reseal-HudPrefsAfterActivation
     Load-Prefs
     return $true
   }
-  # Rejected token still stored for diagnostics; refresh gate from snapshot fields already on $g
-  Reseal-HudPrefsAfterActivation
-  Load-Prefs
+  if (-not $keptExisting) {
+    # Rejected token stored for diagnostics only when no active license existed; keep active license untouched otherwise.
+    Reseal-HudPrefsAfterActivation
+    Load-Prefs
+  }
   return $false
 }
 
@@ -212,29 +255,138 @@ function Test-HudNumericCap([string]$limitKey, [int]$currentCount, [switch]$Repl
   return ($currentCount -lt $max)
 }
 
-function Show-HudCapHint([string]$label, [string]$limitKey, [int]$currentCount) {
-  $max = Get-HudNumericLimit $limitKey
-  $msg = "Limit erreicht: $label`r`nAktuell: $currentCount / max $max (Stufe: $script:hudTier)`r`n`r`n$script:hudUpgradeHint`r`nKauf: $script:hudUpgradeUrl"
+function Get-HudGateI18n([string]$key, [string]$fallbackDe, [string]$fallbackEn, [hashtable]$vars = @{}) {
+  if (Get-Command Get-HudT -ErrorAction SilentlyContinue) {
+    try {
+      $val = Get-HudT $key -Vars $vars
+      if (-not [string]::IsNullOrWhiteSpace($val) -and $val -ne $key) { return [string]$val }
+    } catch { }
+  }
+  $lang = 'en'
+  if (Get-Command Get-HudLang -ErrorAction SilentlyContinue) {
+    try { $lang = [string](Get-HudLang) } catch { }
+  }
+  $tpl = if ($lang -like 'de*') { $fallbackDe } else { $fallbackEn }
+  foreach ($k in $vars.Keys) {
+    $tpl = $tpl.Replace("{$k}", [string]$vars[$k])
+  }
+  return $tpl
+}
+
+function Test-HudCanOpenActivationTab {
+  if ($null -ne $script:hasActivationCli) { return [bool]$script:hasActivationCli }
+  if ($script:HudScriptRoot) {
+    return (Test-Path -LiteralPath (Join-Path $script:HudScriptRoot 'ccc-activation.mjs'))
+  }
+  return $false
+}
+
+function Open-HudActivationTab {
+  if (-not (Test-HudCanOpenActivationTab)) { return }
+  if ($script:settingsOpen -and $script:ShowHudSettingsPage) {
+    try {
+      & $script:ShowHudSettingsPage 'lizenz'
+      if ($script:FocusHudActivationToken) { & $script:FocusHudActivationToken }
+    } catch { }
+    return
+  }
+  if (Get-Command Open-SettingsPanel -ErrorAction SilentlyContinue) {
+    try { Open-SettingsPanel -StartPage 'lizenz' } catch { }
+    return
+  }
+  if (Get-Command Show-SettingsPanel -ErrorAction SilentlyContinue) {
+    try { Show-SettingsPanel -StartPage 'lizenz' } catch { }
+  }
+}
+
+function Show-HudGateDialog([string]$text, [string]$caption, [switch]$AskOpenActivation) {
+  $buttons = if ($AskOpenActivation) {
+    [System.Windows.Forms.MessageBoxButtons]::YesNo
+  } else {
+    [System.Windows.Forms.MessageBoxButtons]::OK
+  }
+  $ans = 'OK'
   try {
-    [System.Windows.Forms.MessageBox]::Show(
-      $msg,
-      'CCC Limit',
-      [System.Windows.Forms.MessageBoxButtons]::OK,
-      [System.Windows.Forms.MessageBoxIcon]::Information
-    ) | Out-Null
+    if (Get-Command Show-HudMessageBox -ErrorAction SilentlyContinue) {
+      $ans = [string](Show-HudMessageBox -Text $text -Caption $caption -Buttons $buttons -Icon ([System.Windows.Forms.MessageBoxIcon]::Information))
+    } else {
+      $ans = [string]([System.Windows.Forms.MessageBox]::Show(
+        $text,
+        $caption,
+        $buttons,
+        [System.Windows.Forms.MessageBoxIcon]::Information
+      ))
+    }
   } catch { }
+  if ($AskOpenActivation -and $ans -eq 'Yes') {
+    Open-HudActivationTab
+  }
+}
+
+function Test-HudStoredLicenseInvalid {
+  $tier = if ($script:hudTier) { [string]$script:hudTier } else { 'none' }
+  if ($tier -eq 'trial' -or $tier -eq 'full') { return $false }
+  return -not [string]::IsNullOrWhiteSpace([string]$script:licenseToken)
+}
+
+function Show-InvalidLicenseBlocker {
+  $title = Get-HudGateI18n 'pro.gate.invalidTitle' 'Ungültige Lizenz' 'Invalid license'
+  $text = Get-HudGateI18n 'pro.gate.invalidBody' 'Ungültige Lizenz. Bitte die Lizenz korrigieren oder Public installieren.' 'Invalid license. Correct the license, or install Public.'
+  Show-HudGateDialog -Text $text -Caption $title
+  Open-HudActivationTab
+}
+
+function Show-HudCapHint([string]$label, [string]$limitKey, [int]$currentCount) {
+  if (Test-HudStoredLicenseInvalid) {
+    Show-InvalidLicenseBlocker
+    return
+  }
+  $max = Get-HudNumericLimit $limitKey
+  $url = if ($script:hudUpgradeUrl) { [string]$script:hudUpgradeUrl } else { 'https://www.ready-4-it.com/akc_ccc' }
+  $tier = if ($script:hudTier) { [string]$script:hudTier } else { 'none' }
+  $title = Get-HudGateI18n 'pro.limit.title' 'CCC Limit' 'CCC Limit'
+  $lines = [System.Collections.Generic.List[string]]::new()
+  $lines.Add((Get-HudGateI18n 'pro.limit.body' 'Limit erreicht: {label} ({current} / max {max}, Stufe: {tier})' 'Limit reached: {label} ({current} / max {max}, tier: {tier})' @{
+    label = $label; current = $currentCount; max = $max; tier = $tier
+  }))
+  $canAct = (Test-HudCanOpenActivationTab) -and ($tier -eq 'none')
+  if ($canAct) {
+    if (-not [string]::IsNullOrWhiteSpace([string]$script:licenseStatus)) {
+      $lines.Add((Get-HudGateI18n 'pro.gate.status' 'Aktueller Status: {status}' 'Current status: {status}' @{ status = [string]$script:licenseStatus }))
+    }
+    $lines.Add('')
+    $lines.Add((Get-HudGateI18n 'pro.gate.openPrompt' 'Jetzt zur Aktivierung wechseln, um den Aktivierungsschlüssel (R4IT…) einzugeben oder zu korrigieren?' 'Open Activation now to enter or correct your activation key (R4IT…)?'))
+  } else {
+    $lines.Add('')
+    $lines.Add((Get-HudGateI18n 'pro.gate.freeBody' 'Pro-Funktion — verfügbar in AKC CCC Pro.' 'Pro feature — available in AKC CCC Pro.'))
+  }
+  $lines.Add((Get-HudGateI18n 'pro.gate.buy' 'Kauf / Download: {url}' 'Purchase / Download: {url}' @{ url = $url }))
+  Show-HudGateDialog -Text ($lines -join "`r`n") -Caption $title -AskOpenActivation:$canAct
 }
 
 function Show-ProUpgradeHint([string]$featureLabel) {
-  $msg = "Pro-Feature: $featureLabel`r`n`r`n$script:hudUpgradeHint`r`n`r`nAktivierung: Einstellungen → Aktivierung`r`nKauf: $script:hudUpgradeUrl"
-  try {
-    [System.Windows.Forms.MessageBox]::Show(
-      $msg,
-      'CCC Pro',
-      [System.Windows.Forms.MessageBoxButtons]::OK,
-      [System.Windows.Forms.MessageBoxIcon]::Information
-    ) | Out-Null
-  } catch { }
+  if (Test-HudStoredLicenseInvalid) {
+    Show-InvalidLicenseBlocker
+    return
+  }
+  $url = if ($script:hudUpgradeUrl) { [string]$script:hudUpgradeUrl } else { 'https://www.ready-4-it.com/akc_ccc' }
+  $title = Get-HudGateI18n 'pro.gate.title' 'AKC CCC Pro' 'AKC CCC Pro'
+  $canAct = Test-HudCanOpenActivationTab
+  $lines = [System.Collections.Generic.List[string]]::new()
+  $lines.Add((Get-HudGateI18n 'pro.gate.feature' 'Pro-Feature: {feature}' 'Pro feature: {feature}' @{ feature = $featureLabel }))
+  if ($canAct) {
+    $statusVal = if (-not [string]::IsNullOrWhiteSpace([string]$script:hudStatusText)) { [string]$script:hudStatusText } else { [string]$script:licenseStatus }
+    if (-not [string]::IsNullOrWhiteSpace($statusVal)) {
+      $lines.Add((Get-HudGateI18n 'pro.gate.status' 'Aktueller Status: {status}' 'Current status: {status}' @{ status = $statusVal }))
+    }
+    $lines.Add('')
+    $lines.Add((Get-HudGateI18n 'pro.gate.openPrompt' 'Jetzt zur Aktivierung wechseln, um den Aktivierungsschlüssel (R4IT…) einzugeben oder zu korrigieren?' 'Open Activation now to enter or correct your activation key (R4IT…)?'))
+  } else {
+    $lines.Add('')
+    $lines.Add((Get-HudGateI18n 'pro.gate.freeBody' 'Diese Funktion ist in AKC CCC Pro enthalten.' 'This feature is included in AKC CCC Pro.'))
+  }
+  $lines.Add((Get-HudGateI18n 'pro.gate.buy' 'Kauf / Download: {url}' 'Purchase / Download: {url}' @{ url = $url }))
+  Show-HudGateDialog -Text ($lines -join "`r`n") -Caption $title -AskOpenActivation:$canAct
 }
 
 function Get-HudAutostartLinkPath {

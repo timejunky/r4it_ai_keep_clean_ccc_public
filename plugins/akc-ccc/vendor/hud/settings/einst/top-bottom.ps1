@@ -141,7 +141,7 @@ $btnPreset = New-FlatBtn (Get-HudT 'settings.lookPreset') ([int](148 * $scale)) 
 $btnPreset.Visible = (-not $isPublicFree)
 $btnPreset.Add_Click({
   if (-not (Test-HudFeature 'hud.lookPresets')) {
-    if ($script:hasActivationCli) { Show-HudProHint (Get-HudT 'settings.lookPreset') }
+    if ($script:hasActivationCli) { Show-ProUpgradeHint (Get-HudT 'settings.lookPreset') }
     return
   }
   if ($ui.presetMode) {
@@ -156,6 +156,10 @@ $ui.btnPreset = $btnPreset
 
 $btnIconLogo = New-FlatBtn (Get-HudT 'settings.iconLogo') ([int](138 * $scale)) $btnH ([System.Drawing.Color]::FromArgb(40, 90, 120))
 $btnIconLogo.Add_Click({
+  if ((Get-Command Test-HudStoredLicenseInvalid -ErrorAction SilentlyContinue) -and (Test-HudStoredLicenseInvalid)) {
+    Show-InvalidLicenseBlocker
+    return
+  }
   if ($ui.iconLogoMode) {
     Return-ToStartInspector
   } else {

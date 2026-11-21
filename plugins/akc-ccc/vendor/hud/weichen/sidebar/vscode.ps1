@@ -157,19 +157,23 @@ function Get-VsCodeSidebarLabel($root) {
     }
   } catch { }
 
-  $treeCt = [System.Windows.Automation.ControlType]::TreeItem
-  $treeCond = New-Object System.Windows.Automation.PropertyCondition(([System.Windows.Automation.AutomationElement]::ControlTypeProperty), $treeCt)
-  $items = $root.FindAll([System.Windows.Automation.TreeScope]::Descendants, $treeCond)
+  # Sessions in current VS Code Agents are ListItems. TreeItem alone stayed on the
+  # previous project until a pill drag blurred the view and flushed isActive.
   $rows = @()
-  foreach ($it in $items) {
-    $nm = [string]$it.Current.Name
-    if ([string]::IsNullOrWhiteSpace($nm)) { continue }
-    $clsHit = $false
-    try { $clsHit = ([string]$it.Current.ClassName -match '\bselected\b') } catch { }
-    $rows += @{
-      Name = $nm
-      Y = [int]$it.Current.BoundingRectangle.Y
-      Selected = ($clsHit -or $ariaSelected.ContainsKey($nm))
+  foreach ($ctName in @('TreeItem', 'ListItem', 'DataItem')) {
+    $ct = [System.Windows.Automation.ControlType]::$ctName
+    $cond = New-Object System.Windows.Automation.PropertyCondition(([System.Windows.Automation.AutomationElement]::ControlTypeProperty), $ct)
+    $items = $root.FindAll([System.Windows.Automation.TreeScope]::Descendants, $cond)
+    foreach ($it in $items) {
+      $nm = [string]$it.Current.Name
+      if ([string]::IsNullOrWhiteSpace($nm)) { continue }
+      $clsHit = $false
+      try { $clsHit = ([string]$it.Current.ClassName -match '\bselected\b') } catch { }
+      $rows += @{
+        Name = $nm
+        Y = [int]$it.Current.BoundingRectangle.Y
+        Selected = ($clsHit -or $ariaSelected.ContainsKey($nm))
+      }
     }
   }
   # Several rows can stay selected. The lowest (latest click) wins.
