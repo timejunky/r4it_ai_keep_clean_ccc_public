@@ -30,7 +30,7 @@
                         "source":  "./plugins/akc-ccc",
                         "logo":  "assets/logo.png",
                         "description":  "Free VS Code Agents / Copilot Chat plugin for multi-project workspace identity: optional IDE border cue and MCP tools (ccc_resolve_visual_context, ccc_apply_ide_border_cue). For the floating Project HUD pill and Trial/Pro branding, see ready-4-it.com/akc_ccc. Companion VS Code extension: ready-4-it.akc-ccc-vs.",
-                        "version":  "0.2.59",
+                        "version":  "0.2.60",
                         "author":  {
                                        "name":  "ready-4-it",
                                        "email":  "support@ready-4-it.com",
